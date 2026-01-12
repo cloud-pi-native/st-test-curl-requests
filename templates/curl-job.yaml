@@ -28,8 +28,8 @@ spec:
                 - name: TOKEN
                   valueFrom:
                     secretKeyRef:
-                    name: nginx-certs-secret
-                    key: TOKEN
+                      name: nginx-certs-secret
+                      key: TOKEN
               command: 
                 - /bin/sh
                 - -c
