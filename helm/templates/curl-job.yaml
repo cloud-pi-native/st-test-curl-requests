@@ -26,7 +26,7 @@ spec:
                 {{- if .Values.useProxy }}
                 - name: HTTP_PROXY
                   value: "{{ .Values.proxyUrl }}"
-                - name: HTTS_PROXY
+                - name: HTTPS_PROXY
                   value: "{{ .Values.proxyUrl }}"
                 {{- end }}
                 - name: URL
