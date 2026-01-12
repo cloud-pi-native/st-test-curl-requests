@@ -1,0 +1,9 @@
+iddossier: api/demo/demo
+url_to_test: https://www.google.fr
+token: 1234
+withCert: true
+cronexpr: "* 1 * * *"
+command: sh /scripts/kubernetescurljob.sh
+secret:
+  mount: testmj
+  path: test-ines

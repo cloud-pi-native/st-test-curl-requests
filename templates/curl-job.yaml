@@ -1,0 +1,60 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: st-test-nginx-cronjob
+  labels:
+    app: st-test-nginx-cronjob
+    type: cron
+spec:
+  schedule: "* 1 * * *" # Run every hour
+  suspend: true
+  jobTemplate:
+    metadata:
+      labels:
+        app: st-test-nginx-cronjob
+        type: cron
+    spec:
+      template:
+        spec:
+          containers:
+            - name: st-test-nginx-cronjob
+              image: rapidfort/curl:8.18.0
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: ID_DOSSIER
+                  value: "{{ .Values.iddossier }}"
+                - name: URL
+                  value: "{{ .Values.url_to_test }}"
+                - name: TOKEN
+                valueFrom:
+                    secretKeyRef:
+                    name: nginx-certs-secret
+                    key: TOKEN
+              command: 
+                - /bin/sh
+                - -c
+                - {{ .Values.command }}
+              volumeMounts:
+                - name: script
+                  mountPath: /scripts
+                - name: certs
+                  mountPath: /certs
+
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 100M
+                limits:
+                  cpu: 500m
+                  memory: 100M
+
+          volumes:
+            - name: script
+              configMap:
+                name: st-test-nginx-config
+                defaultMode: 0777
+            - name: certs
+              secret:
+                secretName: nginx-certs-secret
+                defaultMode: 0777
+          restartPolicy: Never
