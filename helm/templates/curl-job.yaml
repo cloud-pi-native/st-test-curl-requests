@@ -23,6 +23,12 @@ spec:
               env:
                 - name: ID_DOSSIER
                   value: "{{ .Values.iddossier }}"
+                {{- if .Values.useProxy }}
+                - name: HTTP_PROXY
+                  value: "{{ .Values.proxyUrl }}"
+                - name: HTTS_PROXY
+                  value: "{{ .Values.proxyUrl }}"
+                {{- end }}
                 - name: URL
                   value: "{{ .Values.url_to_test }}"
                 - name: TOKEN

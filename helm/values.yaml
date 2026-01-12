@@ -7,3 +7,5 @@ command: sh /scripts/kubernetescurljob.sh
 secret:
   mount: testmj
   path: test-ines
+useProxy: false
+proxyUrl: http://proxy.example.com:8080
