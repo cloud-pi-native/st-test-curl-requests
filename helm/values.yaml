@@ -3,6 +3,7 @@ url_to_test: https://www.google.fr
 token: 1234
 withCert: true
 cronexpr: "* 1 * * *"
+curlOption: "-vvv -k"
 command: sh /scripts/kubernetescurljob.sh
 secret:
   mount: testmj
