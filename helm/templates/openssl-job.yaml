@@ -48,7 +48,7 @@ spec:
           volumes:
             - name: script
               configMap:
-                name: {{ .Values.configMap.openssl.name}}
+                name: st-test-nginx-config-openssl
                 defaultMode: 0777
             - name: certs
               secret:

@@ -1,5 +1,6 @@
-image: badouralix/curl-jq-yq:ubuntu
-image.openssl: alpine/openssl:3.5.4
+image:
+  curl: badouralix/curl-jq-yq:ubuntu
+  openssl: alpine/openssl:3.5.4
 iddossier: api/demo/demo
 url_to_test: https://www.google.fr
 withCert: true
