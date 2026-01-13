@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: st-test-nginx-config-openssl
+data:
+
+  # nginx script
+  kubernetescurljob.sh: |
+    #!/bin/env sh
+
+    echo "##########"
+    echo "get info ssl cert /tmp/full_cert.pem "
+    echo "##########"
+
+    openssl x509 -noout -text -in /tmp/full_cert.pem
+    
+    echo "##########"
+    echo "fin openssl info"
+    echo "##########"
+
+
+

@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: st-test-openssl-cronjob
+  labels:
+    app: st-test-openssl-cronjob
+    type: cron
+spec:
+  schedule: "* 1 * * *" # Run every hour
+  suspend: true
+  jobTemplate:
+    metadata:
+      labels:
+        app: st-test-openssl-cronjob
+        type: cron
+    spec:
+      template:
+        spec:
+          containers:
+            - name: st-test-openssl-cronjob
+              image: {{ .Values.image.openssl }}
+              imagePullPolicy: IfNotPresent
+              env:
+                {{- if .Values.useProxy }}
+                - name: HTTP_PROXY
+                  value: "{{ .Values.proxyUrl }}"
+                - name: HTTPS_PROXY
+                  value: "{{ .Values.proxyUrl }}"
+                {{- end }}
+              command: 
+                - /bin/sh
+                - -c
+                - {{ .Values.command }}
+              volumeMounts:
+                - name: script
+                  mountPath: /scripts
+                - name: certs
+                  mountPath: /tmp/
+
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 100M
+                limits:
+                  cpu: 500m
+                  memory: 100M
+
+          volumes:
+            - name: script
+              configMap:
+                name: {{ .Values.configMap.openssl.name}}
+                defaultMode: 0777
+            - name: certs
+              secret:
+                secretName: nginx-certs-secret
+                defaultMode: 0777
+          restartPolicy: Never

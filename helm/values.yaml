@@ -1,4 +1,5 @@
 image: badouralix/curl-jq-yq:ubuntu
+image.openssl: alpine/openssl:3.5.4
 iddossier: api/demo/demo
 url_to_test: https://www.google.fr
 withCert: true
@@ -13,3 +14,5 @@ proxyUrl: http://proxy.example.com:8080
 jwtTokenUrl: https://url.jwt.token/endpoint
 configMap:
   name: st-test-nginx-config
+  openssl:
+    name:
