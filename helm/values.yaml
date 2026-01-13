@@ -1,3 +1,4 @@
+image: badouralix/curl-jq-yq:ubuntu
 iddossier: api/demo/demo
 url_to_test: https://www.google.fr
 token: 1234
@@ -10,3 +11,4 @@ secret:
   path: test-ines
 useProxy: false
 proxyUrl: http://proxy.example.com:8080
+jwtTokenUrl: https://url.jwt.token/endpoint

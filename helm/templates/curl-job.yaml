@@ -18,7 +18,7 @@ spec:
         spec:
           containers:
             - name: st-test-nginx-cronjob
-              image: rapidfort/curl:8.18.0
+              image: {{ .Values.image }}
               imagePullPolicy: IfNotPresent
               env:
                 - name: ID_DOSSIER
@@ -38,6 +38,17 @@ spec:
                     secretKeyRef:
                       name: nginx-certs-secret
                       key: TOKEN
+                - name: JWT_TOKEN_URL
+                  value: "{{ .Values.jwtTokenUrl }}"
+                - name: JWT_TOKEN_PRE_OPTS
+                  value: "--location --request"
+                - name: JWT_TOKEN_OPTS
+                  value: "--header 'Content-Type: application/x-www-form-urlencoded' --data  'grant_type=client_credentials&scope=releve_information_integral:read' --user \"$JWT_USER\"  -k -vvv"
+                - name: JWT_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: nginx-certs-secret
+                      key: JWT_USER
               command: 
                 - /bin/sh
                 - -c
