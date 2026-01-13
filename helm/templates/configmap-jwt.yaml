@@ -12,9 +12,7 @@ data:
     echo "get JWT token"
     echo "##########"
 
-    echo "curl $JWT_TOKEN_PRE_OPTS POST $JWT_TOKEN_URL $JWT_TOKEN_OPTS --user "$JWT_USER:$JWT_PASSWORD" | jq -r '.access_token'"
-    JWT_TOKEN=`curl $JWT_TOKEN_PRE_OPTS POST $JWT_TOKEN_URL $JWT_TOKEN_OPTS --user "$JWT_USER:$JWT_PASSWORD" | jq -r '.access_token'`
-
+    JWT_TOKEN=`curl --location --request POST $JWT_TOKEN_URL --header 'Content-Type: application/x-www-form-urlencoded' --data 'grant_type=client_credentials&scope=releve_information_integral:read' -k --user "$JWT_USER:$JWT_PASSWORD" | jq -r '.access_token'`
     echo "##########"
     echo "token : $JWT_TOKEN"
     echo "##########"
