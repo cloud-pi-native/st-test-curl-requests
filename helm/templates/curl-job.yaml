@@ -43,7 +43,7 @@ spec:
                 - name: JWT_TOKEN_PRE_OPTS
                   value: "--location --request"
                 - name: JWT_TOKEN_OPTS
-                  value: "--header 'Content-Type: application/x-www-form-urlencoded' --data  'grant_type=client_credentials&scope=releve_information_integral:read' --user \"$JWT_USER\"  -k -vvv"
+                  value: "--header 'Content-Type: application/x-www-form-urlencoded' --data  'grant_type=client_credentials&scope=releve_information_integral:read'  -k -vvv"
                 - name: JWT_USER
                   valueFrom:
                     secretKeyRef:

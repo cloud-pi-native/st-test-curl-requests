@@ -9,8 +9,8 @@ data:
     #!/bin/env sh
 
     echo "get JWT token"
-    echo "curl $JWT_TOKEN_PRE_OPTS POST $JWT_TOKEN_URL $JWT_TOKEN_OPTS | jq -r '.access_token'"
-    JWT_TOKEN=`curl $JWT_TOKEN_PRE_OPTS POST $JWT_TOKEN_URL $JWT_TOKEN_OPTS | jq -r '.access_token'`
+    echo "curl $JWT_TOKEN_PRE_OPTS POST $JWT_TOKEN_URL $JWT_TOKEN_OPTS --user "$JWT_USER" | jq -r '.access_token'"
+    JWT_TOKEN=`curl $JWT_TOKEN_PRE_OPTS POST $JWT_TOKEN_URL $JWT_TOKEN_OPTS --user "$JWT_USER" | jq -r '.access_token'`
     echo "token : $JWT_TOKEN"
 
     echo "Appel à travers INES avec le token JWT"
