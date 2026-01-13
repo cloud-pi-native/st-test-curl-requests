@@ -9,11 +9,12 @@ data:
     #!/bin/env sh
 
     echo "get JWT token"
+    echo "curl $JWT_TOKEN_PRE_OPTS POST $JWT_TOKEN_URL $JWT_TOKEN_OPTS | jq -r '.access_token'"
     JWT_TOKEN=`curl $JWT_TOKEN_PRE_OPTS POST $JWT_TOKEN_URL $JWT_TOKEN_OPTS | jq -r '.access_token'`
     echo "token : $JWT_TOKEN"
 
     echo "Appel à travers INES avec le token JWT"
-    curl $CURL_OPTIONS "Token: $TOKEN" -H 'accept: application/json' -H "Authorization: Bearer $JWT_TOKEN" $URL/$ID_DOSSIER --cert /tmp/cert.pem
+    curl $CURL_OPTIONS "Token: $TOKEN" -H 'accept: application/json' -H "Authorization: Bearer $JWT_TOKEN" $URL/$ID_DOSSIER --cert /tmp/full_cert.pem
     echo "fin appel INES"
 
 

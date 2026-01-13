@@ -57,7 +57,7 @@ spec:
                 - name: script
                   mountPath: /scripts
                 - name: certs
-                  mountPath: /certs
+                  mountPath: /tmp/
 
               resources:
                 requests:
