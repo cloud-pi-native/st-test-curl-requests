@@ -8,14 +8,26 @@ data:
   kubernetescurljob.sh: |
     #!/bin/env sh
 
+    echo "##########"
     echo "get JWT token"
+    echo "##########"
+
     echo "curl $JWT_TOKEN_PRE_OPTS POST $JWT_TOKEN_URL $JWT_TOKEN_OPTS --user "$JWT_USER" | jq -r '.access_token'"
     JWT_TOKEN=`curl $JWT_TOKEN_PRE_OPTS POST $JWT_TOKEN_URL $JWT_TOKEN_OPTS --user "$JWT_USER" | jq -r '.access_token'`
-    echo "token : $JWT_TOKEN"
 
+    echo "##########"
+    echo "token : $JWT_TOKEN"
+    echo "##########"
+
+    echo "##########"
     echo "Appel à travers INES avec le token JWT"
+    echo "##########"
+
     curl $CURL_OPTIONS "Token: $TOKEN" -H 'accept: application/json' -H "Authorization: Bearer $JWT_TOKEN" $URL/$ID_DOSSIER --cert /tmp/full_cert.pem
+
+    echo "##########"
     echo "fin appel INES"
+    echo "##########"
 
 
 
