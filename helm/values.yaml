@@ -12,3 +12,5 @@ secret:
 useProxy: false
 proxyUrl: http://proxy.example.com:8080
 jwtTokenUrl: https://url.jwt.token/endpoint
+configMap:
+  name: st-test-nginx-config

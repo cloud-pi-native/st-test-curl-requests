@@ -1,3 +1,5 @@
 secret:
   mount: testmj # MEttre a jour avec le nom du projet
   path: test-ines
+configMap:
+  name: st-test-nginx-config-advanced

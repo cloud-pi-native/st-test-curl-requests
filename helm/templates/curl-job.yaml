@@ -70,7 +70,7 @@ spec:
           volumes:
             - name: script
               configMap:
-                name: st-test-nginx-config
+                name: {{ .Values.configmap.name}}
                 defaultMode: 0777
             - name: certs
               secret:
