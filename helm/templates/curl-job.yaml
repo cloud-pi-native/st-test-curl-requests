@@ -42,8 +42,6 @@ spec:
                   value: "{{ .Values.jwtTokenUrl }}"
                 - name: JWT_TOKEN_PRE_OPTS
                   value: "--location --request"
-                - name: JWT_TOKEN_OPTS
-                  value: "{{ .Values.jwtTokenOpts }}"
                 - name: JWT_USER
                   valueFrom:
                     secretKeyRef:

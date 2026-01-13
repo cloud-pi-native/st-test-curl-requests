@@ -9,8 +9,8 @@ data:
     #!/bin/env sh
 
     {{- if .Values.withCert }}
-    echo "make a request to  curl $CURL_OPTIONS $URL/$ID_DOSSIER -H Token:$TOKEN --cert /certs/cert.pem --key /certs/key.pem"
-    curl $CURL_OPTIONS "$URL/$ID_DOSSIER" -H "Token:$TOKEN" --cert /certs/cert.pem --key /certs/key.pem
+    echo "make a request to  curl $CURL_OPTIONS $URL/$ID_DOSSIER -H Token:$TOKEN --cert /certs/full_cert.pem"
+    curl $CURL_OPTIONS "$URL/$ID_DOSSIER" -H "Token:$TOKEN" --cert /certs/full_cert.pem
     {{- else }}
     echo "make a request to  curl $CURL_OPTIONS $URL/$ID_DOSSIER -H Token:$TOKEN"
     curl $CURL_OPTIONS "$URL/$ID_DOSSIER" -H "Token:$TOKEN"
