@@ -70,7 +70,7 @@ spec:
           volumes:
             - name: script
               configMap:
-                name: {{ .Values.configmap.name}}
+                name: {{ .Values.configMap.name}}
                 defaultMode: 0777
             - name: certs
               secret:
