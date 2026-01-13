@@ -49,6 +49,11 @@ spec:
                     secretKeyRef:
                       name: nginx-certs-secret
                       key: JWT_USER
+                - name: JWT_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: nginx-certs-secret
+                      key: JWT_PASSWORD
               command: 
                 - /bin/sh
                 - -c
