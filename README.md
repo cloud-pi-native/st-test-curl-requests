@@ -33,3 +33,7 @@ Avec :
  - URL_JWT : URL d'appel pour récupérer le token JWT
 
 Depuis l'interface ArgoCD, exécuter un job à partir du cronjob et vérifier les logs pour voir le résultat.
+
+Le repo contient 2 conrjob :
+ - st-test-nginx-cronjob : exécution du script contenant les requêtes curl présentes dans la configMap st-test-nginx-config-advanced
+ - st-test-openssl-cronjob : exécution du script de la configMap st-test-nginx-config-openssl qui affiche les informations du certificat utilisé lors des requêtes (prérequis : le certificat est présent dans un secret via Vault)
