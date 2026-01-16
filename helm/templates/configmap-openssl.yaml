@@ -9,10 +9,17 @@ data:
     #!/bin/env sh
 
     echo "##########"
+    echo "get info private key /tmp/private.pem "
+    echo "##########"
+
+    openssl rsa -noout -modulus -in /tmp/private.pem | openssl md5
+    openssl x509 -noout -modulus -in /tmp/cert.pem | openssl md5
+
+    echo "##########"
     echo "get info ssl cert /tmp/full_cert.pem "
     echo "##########"
 
-    openssl x509 -noout -text -in /tmp/full_cert.pem
+    while openssl x509 -noout -text; do :; done < /tmp/full_cert.pem
     
     echo "##########"
     echo "fin openssl info"
