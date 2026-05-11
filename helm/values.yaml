@@ -1,8 +1,10 @@
 image:
   curl: badouralix/curl-jq-yq:ubuntu
   openssl: alpine/openssl:3.5.4
+  dig: wbitt/network-multitool:openshift-extra
 iddossier: api/demo/demo
 url_to_test: https://www.google.fr
+digTarget: google.fr
 withCert: true
 cronexpr: "* 1 * * *"
 curlOption: "-vvv -k"

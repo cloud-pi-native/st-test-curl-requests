@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: st-test-nginx-config-dig
+data:
+
+  # dig script
+  kubernetesdigjob.sh: |
+    #!/bin/env sh
+
+    echo "##########"
+    echo "dig lookup for ${DIG_TARGET}"
+    echo "##########"
+
+    dig +short "${DIG_TARGET}"
+    dig "${DIG_TARGET}"
+
+    unset HTTP_PROXY
+    unset HTTPS_PROXY
+    unset http_proxy
+    unset https_proxy
+
+    dig +short "${DIG_TARGET}"
+    dig "${DIG_TARGET}"
+
+    echo "##########"
+    echo "end dig lookup"
+    echo "##########"

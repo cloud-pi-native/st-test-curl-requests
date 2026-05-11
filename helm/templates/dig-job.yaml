@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: st-test-dig-cronjob
+  labels:
+    app: st-test-dig-cronjob
+    type: cron
+spec:
+  schedule: "{{ .Values.cronexpr }}"
+  suspend: true
+  jobTemplate:
+    metadata:
+      labels:
+        app: st-test-dig-cronjob
+        type: cron
+    spec:
+      template:
+        spec:
+          containers:
+            - name: st-test-dig-cronjob
+              image: {{ .Values.image.dig }}
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: DIG_TARGET
+                  value: "{{ .Values.digTarget }}"
+                {{- if .Values.useProxy }}
+                - name: HTTP_PROXY
+                  value: "{{ .Values.proxyUrl }}"
+                - name: HTTPS_PROXY
+                  value: "{{ .Values.proxyUrl }}"
+                - name: http_proxy
+                  value: "{{ .Values.proxyUrl }}"
+                - name: https_proxy
+                  value: "{{ .Values.proxyUrl }}"
+                {{- end }}
+              command:
+                - /bin/sh
+                - -c
+                - sh /scripts/kubernetesdigjob.sh
+              volumeMounts:
+                - name: script
+                  mountPath: /scripts
+
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 100M
+                limits:
+                  cpu: 500m
+                  memory: 100M
+
+          volumes:
+            - name: script
+              configMap:
+                name: st-test-nginx-config-dig
+                defaultMode: 0777
+          restartPolicy: Never
