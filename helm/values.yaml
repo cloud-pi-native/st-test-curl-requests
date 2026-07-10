@@ -7,13 +7,19 @@ url_to_test: https://www.google.fr
 digTarget: google.fr
 withCert: true
 cronexpr: "* 1 * * *"
-curlOption: "-vvv -k"
+curlOption: "-k"
 command: sh /scripts/kubernetescurljob.sh
 secret:
   mount: testmj
   path: test-ines
-useProxy: false
-proxyUrl: http://proxy.example.com:8080
+  proxy:
+    mount: mi-serviceteam
+    path: orion-creds
+useProxy: true
+proxyUrl: http://proxymi:8888
+proxy_host: proxymi
+proxy_port: 8888
 jwtTokenUrl: https://url.jwt.token/endpoint
 configMap:
   name: st-test-nginx-config
+url_to_test_mi: http://demo-cpin-ines.d650.dev.forge.minint.fr

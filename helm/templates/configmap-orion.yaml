@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: st-test-orion-script
+data:
+  kubernetescurljob.sh: |
+    #!/bin/env sh
+
+    echo "Start : make a request to Internet with curl $CURL_OPTIONS $URL with proxyDC (forward to Orion) auth -> expected OK"
+    PROXY_URL="http://${ORION_USERNAME}:${ORION_PASSWORD}@${PROXY_HOST}:${PROXY_PORT}"
+    curl $CURL_OPTIONS -x $PROXY_URL "$URL"
+    echo "End"
+    
+    echo "Start : make a request to Internet with curl $CURL_OPTIONS $URL without proxyDC (forward to Orion) auth -> expected KO"
+    PROXY_URL="http://${PROXY_HOST}:${PROXY_PORT}"
+    curl $CURL_OPTIONS -x $PROXY_URL "$URL"
+    echo "End"
+
+    echo "Start : make a request to MI with curl $CURL_OPTIONS $URL_MI with proxyDC (no auth needed) -> expected OK"
+    PROXY_URL="http://${PROXY_HOST}:${PROXY_PORT}"
+    curl $CURL_OPTIONS -x $PROXY_URL "$URL_MI"
+    echo "End"
+
+    echo "Start : make a request to MI with curl $CURL_OPTIONS $URL_MI without proxyDC -> expected KO"
+    PROXY_URL="http://${PROXY_HOST}:${PROXY_PORT}"
+    curl $CURL_OPTIONS "$URL_MI"
+    echo "End"

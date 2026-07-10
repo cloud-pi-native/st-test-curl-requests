@@ -1,0 +1,69 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: st-test-orion-cronjob
+  labels:
+    app: st-test-orion-cronjob
+    type: cron
+spec:
+  schedule: "* 1 * * *" # Run every hour
+  suspend: true
+  jobTemplate:
+    metadata:
+      labels:
+        app: st-test-orion-cronjob
+        type: cron
+    spec:
+      template:
+        spec:
+          containers:
+            - name: st-test-orion-cronjob
+              image: {{ .Values.image.curl }}
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: CURL_OPTIONS
+                  value: "{{ .Values.curlOption }}"
+                {{- if .Values.useProxy }}
+                - name: PROXY_HOST
+                  value: "{{ .Values.proxy_host }}"
+                - name: PROXY_PORT
+                  value: "{{ .Values.proxy_port }}"
+                {{- end }}
+                - name: URL
+                  value: "{{ .Values.url_to_test }}"
+                - name: URL_MI
+                  value: "{{ .Values.url_to_test_mi }}"
+                - name: JWT_TOKEN_URL
+                  value: "{{ .Values.jwtTokenUrl }}"
+                - name: JWT_TOKEN_PRE_OPTS
+                  value: "--location --request"
+                - name: ORION_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: proxy-secret
+                      key: ORION_USERNAME
+                - name: ORION_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: proxy-secret
+                      key: ORION_PASSWORD
+              command: 
+                - /bin/sh
+                - -c
+                - {{ .Values.command }}
+              volumeMounts:
+                - name: script
+                  mountPath: /scripts
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 100M
+                limits:
+                  cpu: 500m
+                  memory: 100M
+          volumes:
+            - name: script
+              configMap:
+                name: {{ .Values.configMap.name}}
+                defaultMode: 0777
+          restartPolicy: Never
