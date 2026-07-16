@@ -64,6 +64,6 @@ spec:
           volumes:
             - name: script
               configMap:
-                name: {{ .Values.configMap.name}}
+                name: st-test-orion-script
                 defaultMode: 0777
           restartPolicy: Never
