@@ -7,33 +7,28 @@ Ce chart crée un cronjob qui exécute un job réalisant une requête http vers 
 
 Ajouter ce repo de code depuis la console.
 
-Dans Vault ajouter un secret nommé test-ines et contenant les secrets : TOKEN, full_cert.pem, JWT_USER, JWT_PASSWORD  avec les valeurs associées
+Dans Vault ajouter un secret nommé orion_creds et contenant les clés ORION_USERNAME et ORION_PASSWORD correspondant aux credentials Orion.
 
-Mettre à jour le fichier values-custom.yaml à la racine du projet avec les informations du secret et notamment le nom du projet.
 
-Depuis ArgoCD, configurer le projet en ajoutant en paramètre le fichier values-custom.yaml puis une fois que le projet est déployé lancer un job à partir du cronjob et consulter les logs sur le pod créé.
-
-Modifier le fichier values-custom.yaml : 
+Modifier le fichier values.yaml : 
 ```yaml
+image:
+  curl: badouralix/curl-jq-yq:ubuntu
+url_to_test: https://www.google.fr # Renseigner ici l'URL sur Internet à tester
+curlOption: "-k"
+command: sh /scripts/kubernetescurljob.sh
 secret:
-  mount: mi-serviceteam # MEttre a jour avec le nom du projet
-  path: test-st
-iddossier: api-gdc/dossiers/
-url_to_test: URL_INES
+  proxy:
+    mount: NOM_PROJET # A Adapter en fonction du nom du projet 
+    path: orion-creds
 useProxy: true
-proxyUrl: PROXY_DC
-jwtTokenUrl: URL_JWT
+proxy_host: proxymi # Renseigner ici le hostname du proxy en fonction de la région
+proxy_port: 8888 # Renseigner ici le port du proxy
 configMap:
-  name: st-test-nginx-config-advanced
+  name: st-test-nginx-config
+url_to_test_mi: http://demo-cpin-ines.d650.dev.forge.minint.fr # Mettre ici l'URL sur le réseau interne à tester
 ```
-
-Avec :
- - URL_INES : URL d'accès à INES (propre en passant par la CDS INES)
- - PROXY_DC : proxy du datacenter portant la notion de région
- - URL_JWT : URL d'appel pour récupérer le token JWT
 
 Depuis l'interface ArgoCD, exécuter un job à partir du cronjob et vérifier les logs pour voir le résultat.
 
-Le repo contient 2 conrjob :
- - st-test-nginx-cronjob : exécution du script contenant les requêtes curl présentes dans la configMap st-test-nginx-config-advanced
- - st-test-openssl-cronjob : exécution du script de la configMap st-test-nginx-config-openssl qui affiche les informations du certificat utilisé lors des requêtes (prérequis : le certificat est présent dans un secret via Vault)
+le job fait une requete curl vers les 2 URL avec et sans l'utilisation du proxy et affiche le résultat.

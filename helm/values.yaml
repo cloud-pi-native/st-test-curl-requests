@@ -1,25 +1,15 @@
 image:
   curl: badouralix/curl-jq-yq:ubuntu
-  openssl: alpine/openssl:3.5.4
-  dig: wbitt/network-multitool:openshift-extra
-iddossier: api/demo/demo
 url_to_test: https://www.google.fr
-digTarget: google.fr
-withCert: true
-cronexpr: "* 1 * * *"
 curlOption: "-k"
 command: sh /scripts/kubernetescurljob.sh
 secret:
-  mount: testmj
-  path: test-ines
   proxy:
     mount: mi-serviceteam
     path: orion-creds
 useProxy: true
-proxyUrl: http://proxymi:8888
 proxy_host: proxymi
 proxy_port: 8888
-jwtTokenUrl: https://url.jwt.token/endpoint
 configMap:
   name: st-test-nginx-config
 url_to_test_mi: http://demo-cpin-ines.d650.dev.forge.minint.fr

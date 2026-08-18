@@ -1,5 +1,5 @@
 apiVersion: v1
-name: ST example chart test NGINX
+name: ST example chart URL
 version: 0.1-beta
-description: An example chart that create a cronjob to test nginx requests
+description: An example chart that create a cronjob to check URL
 appVersion: "0.1"
